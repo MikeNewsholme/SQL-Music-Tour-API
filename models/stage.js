@@ -13,15 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  stage.init({
-    event_id: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    genre: DataTypes.TEXT,
-    available_start_time: DataTypes.DATE,
-    end_time: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'stage',
-  });
+  stage.init(
+    {
+      stage_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      stage_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Stage",
+      tableName: "stages",
+      timestamps: false,
+    }
+  );
   return stage;
 };
