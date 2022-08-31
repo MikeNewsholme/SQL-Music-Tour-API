@@ -23,14 +23,15 @@ stages.get("/", async (req, res) => {
 stages.get("/:id", async (req, res) => {
   try {
     const foundStage = await Stage.findOne({
-      where: { stage_id: req.params.id },
+      where: { stage_name: req.params.name },
+      include: {
+        model: Event,
+        as: "events",
+        through: { attributes: [] },
+      },
+      order: [[{ model: Event, as: "events" }, "date", "ASC"]],
     });
-
-    if (foundStage != null) {
-      res.status(200).json(foundStage);
-    } else {
-      res.status(404).json("Stage " + req.params.id + " does not exist!");
-    }
+    res.status(200).json(foundStage);
   } catch (error) {
     res.status(500).json(error);
   }

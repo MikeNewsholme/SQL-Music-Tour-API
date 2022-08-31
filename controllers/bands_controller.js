@@ -22,8 +22,10 @@ bands.get("/", async (req, res) => {
 bands.get("/:name", async (req, res) => {
   try {
     const foundBand = await Band.findOne({
-      where: { name: req.params.id },
-      include:[ { model: meet_greet, as: 'meet_greets', include: { model: Event, as: 'event', 
+      where: { name: req.params.name },
+      include:[ 
+        { model: meet_greet, as: 'meet_greets', 
+        include: { model: Event, as: 'event', 
     where: {name: { [Op.like]: `%${req.query.event ? req.query.event : ''}%`}}}},
       {
         model:set_time, 
